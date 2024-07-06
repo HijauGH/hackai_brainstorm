@@ -4,11 +4,11 @@ services:
     build:
       context: ./webmark/
       dockerfile: Dockerfile
-    command: bash -c "python manage.py runserver"
+    command: bash -c "python manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./webmark:/app
     expose:
-      - 8000:8000
+      - 8000
     networks:
       - mynetwork
     restart: always
