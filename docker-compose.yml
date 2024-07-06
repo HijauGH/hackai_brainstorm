@@ -1,0 +1,35 @@
+services:
+  backend:
+    container_name: backend
+    build:
+      context: ./webmark/
+      dockerfile: Dockerfile
+    command: bash -c "python manage.py runserver"
+    volumes:
+      - ./backend:/app
+    expose:
+      - 8000
+    networks:
+      - mynetwork
+    restart: always
+
+  nginx:
+    build:
+      context: ./frontend/
+      dockerfile: Dockerfile
+    container_name: nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - backend
+    networks:
+      - mynetwork
+    restart: always
+
+networks:
+  mynetwork:
+    driver: bridge
