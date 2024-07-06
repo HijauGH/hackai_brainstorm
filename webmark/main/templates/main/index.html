@@ -1,0 +1,25 @@
+{% extends 'main/layout.html' %}
+
+{% block content %}
+    <form method="post", acitvate="/api/">
+        <h2>BEBRA</h2>
+        {% csrf_token %}
+        <label for="adSides">adSides</label>
+        <input type="number" name="adSides"><br>
+        
+        <label for="gender">gender</label>
+        <input type="text" name="gender"><br>
+
+        <label for="ageFrom">ageFrom</label>
+        <input type="date" name="ageFrom"><br>
+
+        <label for="ageTo">ageTo</label>
+        <input type="date" name="ageTo"><br>
+
+        <label for="income">income</label>
+        <input type="str" name="income"><br>
+
+        <input type="submit" value="Отправить">
+    </form>
+
+{% endblock %}
