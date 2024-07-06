@@ -8,7 +8,20 @@ class API:
     }
     DATA_INVALID = {"error": "Данные некорректны"}
 
-    def request_update(self, data: dict):
+    def get_point_request(self, data):
+        req, keys_type = self.request(data)
+        req['coord_value'] = AI_Interface.get_coord(keys_type),
+        req['text'] = 'Описание точки'
+
+        return req
+
+    def get_all_point_request(self):
+        req = self.DEFAULT_REQUEST.copy()
+        req['coord_value'] = AI_Interface.get_all_point()
+
+        return req
+
+    def request(self, data: dict):
         keys_type = {
             "adSides": 0,
             "gender": '',
@@ -31,14 +44,4 @@ class API:
 
         else:
             req = self.DEFAULT_REQUEST.copy()
-            match keys_type['type']:
-                case 0:
-                    req['coord_value'] = AI_Interface.get_all_point(),
-
-                case 1:
-                    req['coord_value'] = AI_Interface.get_coord(keys_type),
-                    req['text'] = 'Описание точки'
-
-                
-            return req
-                
+            return req, keys_type

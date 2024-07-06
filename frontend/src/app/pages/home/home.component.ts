@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { catchError, of, switchMap } from 'rxjs';
 import { pointsService } from 'src/app/shared/api/points.service';
+import { ICreatePoint, IGetPoints } from 'src/app/shared/types/map.types';
 import { MapService } from 'src/app/widgets/map/services/map.service';
 
 @Component({
@@ -17,30 +19,59 @@ export class HomeComponent {
   constructor(
     public mapService: MapService,
     private pointsService: pointsService
-  ) {
-    pointsService.getAllPoints();
-  }
+  ) {}
 
+  public dataIsLoading = false;
   public form = new FormGroup({
-    place: new FormControl(''),
-    amount: new FormControl(''),
-    gender: new FormControl(''),
-    ageFrom: new FormControl(null, [Validators.min(0)]),
-    ageTo: new FormControl(null, [Validators.min(0)]),
-    income: new FormControl(''),
+    adSides: new FormControl(null, [Validators.min(0), Validators.required]),
+    gender: new FormControl('', [Validators.required]),
+    ageFrom: new FormControl(null, [Validators.min(0), Validators.required]),
+    ageTo: new FormControl(null, [Validators.min(0), Validators.required]),
+    income: new FormControl('', [Validators.required]),
   });
 
-  public options = [
+  public genderOptions = [
     {
-      value: 'Мужчина',
+      text: 'Мужчина',
+      value: 'male',
     },
     {
-      value: 'Женщина',
+      text: 'Женщина',
+      value: 'female',
     },
     {
-      value: 'Другое',
+      text: 'Все',
+      value: 'all',
     },
   ];
-  // public setCurrency() {}
-  // public removeCurrency();
+  public formatValue(value: any) {
+    return { ...value, type: 1 } as ICreatePoint;
+  }
+
+  public getPoints(value: ICreatePoint) {
+    this.mapService.generatePoints(
+      {
+        coord_value: [{ coord: [39.64, 55.76], value: 23 }],
+        text: '',
+        error: '',
+      },
+      'colored'
+    );
+    this.dataIsLoading = true;
+    this.pointsService
+      .getPointsBy({ ...value })
+      .pipe(
+        switchMap((points: IGetPoints) => {
+          this.mapService.text = points.text;
+          return this.mapService.generatePoints(points, 'colored');
+        }),
+        catchError(error => {
+          console.log(error.message);
+          return of(null);
+        })
+      )
+      .subscribe(() => {
+        this.dataIsLoading = false;
+      });
+  }
 }

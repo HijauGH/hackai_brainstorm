@@ -6,9 +6,9 @@ services:
       dockerfile: Dockerfile
     command: bash -c "python manage.py runserver"
     volumes:
-      - ./backend:/app
+      - ./webmark:/app
     expose:
-      - 8000
+      - 8000:8000
     networks:
       - mynetwork
     restart: always

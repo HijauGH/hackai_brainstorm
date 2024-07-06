@@ -1,5 +1,7 @@
 <div class="btn">
-  <button [class._active]="isLoading"><ng-content></ng-content></button>
+  <button [disabled]="isDisabled" [class._active]="isLoading">
+    <ng-content></ng-content>
+  </button>
   <div class="btn__loading" [class._active]="isLoading">
     <span></span>
     <span></span>

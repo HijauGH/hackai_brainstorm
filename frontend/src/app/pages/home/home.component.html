@@ -6,17 +6,12 @@
           <form class="left-main__form form-main" [formGroup]="form">
             <input
               class="input"
-              formControlName="place"
-              type="text"
-              placeholder="Укажите район/город и т.п." />
-            <input
-              class="input"
-              formControlName="amount"
-              type="text"
+              formControlName="adSides"
+              type="number"
               placeholder="Количество рекламных сторон" />
             <app-select
               formControlName="gender"
-              [options]="options"
+              [options]="genderOptions"
               [placeholder]="'Гендер целевой аудитории'" />
             <div class="form-main__age">
               <input
@@ -33,14 +28,17 @@
             <input
               class="input"
               formControlName="income"
-              type="number"
-              placeholder="Доход целевой аудитории"
-              currency />
+              type="text"
+              placeholder="Доход целевой аудитории" />
             <app-button
-              (click)="mapService.findPlace(form.controls.place.value!)"
+              [isLoading]="dataIsLoading"
+              [isDisabled]="form.invalid"
+              (click)="form.valid ? getPoints(formatValue(form.value)) : ''"
               >Генерация точек</app-button
             >
-            <small *ngIf="form.invalid"></small>
+            <small *ngIf="form.invalid && form.touched" style="color: red"
+              >Все поля обязательны</small
+            >
           </form>
         </div>
         <div class="main__right right-main">

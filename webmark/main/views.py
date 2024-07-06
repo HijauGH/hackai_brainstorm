@@ -1,17 +1,15 @@
-from django.shortcuts import render
 from django.http import HttpRequest, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from .APIhandler import API
 
-
-def index(request: HttpRequest, data = {}):
-    if request.method == "GET":
-        return render(request, 'main/index.html', data)
-
-
 @csrf_exempt
-def api_handler(request: HttpRequest):
+def index(request: HttpRequest):
     api = API()
-    data = api.request_update(request.POST)
-    return JsonResponse(data=data, status=200)
+    if request.method == "POST":
+        data = api.get_point_request(request.POST)
+        return JsonResponse(data=data, status=200)
+
+    else:
+        return JsonResponse(data=api.get_all_point_request(), status=200)
+

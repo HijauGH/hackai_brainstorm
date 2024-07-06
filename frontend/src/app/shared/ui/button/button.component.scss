@@ -27,6 +27,9 @@
       background-color: #171515;
       color: transparent;
     }
+    &:disabled {
+      opacity: 0.5;
+    }
   }
   &__loading {
     display: none;
@@ -49,6 +52,7 @@
       width: 10px;
       height: 10px;
       position: absolute;
+      transform: translate(-50%, -50%);
       top: 50%;
       left: 50%;
       animation: loading 1s ease-in-out infinite alternate;

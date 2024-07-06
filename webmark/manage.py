@@ -1,18 +1,21 @@
 #!/usr/bin/env python
 import os
 import sys
+import logging
+from dotenv import load_dotenv
+from os import getenv
 from webmark import settings
+from main import const
 
 def prerun():
-    """from dotenv import load_dotenv
-    from os import getenv
     load_dotenv()
     settings.SECRET_KEY = getenv("SECRET_KEY")
-    settings.ADMIN_PANEL = getenv("ADMIN_PANEL")"""
-    print("Prerun complite !")
+    settings.ADMIN_PANEL = getenv("ADMIN_PANEL")
+    const.PATH_DATA = getenv("PATH_DATA")
+    const.PATH_ALL_POINT = getenv("PATH_ALL_POINT")
+    logging.info("Prerun complite !")
 
 def main():
-    """Run administrative tasks."""
     prerun()
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'webmark.settings')
     try:

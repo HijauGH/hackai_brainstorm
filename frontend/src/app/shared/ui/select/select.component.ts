@@ -9,6 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { option } from '../../types/map.types';
 
 @Component({
   selector: 'app-select',
@@ -27,7 +28,7 @@ export class SelectComponent implements ControlValueAccessor {
   @ViewChild('dropdown') dropdown!: ElementRef<HTMLDivElement>;
   @ViewChild('list') list!: ElementRef<HTMLDivElement>;
   @Input()
-  options: { value: string }[] = [];
+  options: option[] = [];
   @Input() placeholder = '';
   public isDropdownOpen = false;
   public value = '';
@@ -43,10 +44,10 @@ export class SelectComponent implements ControlValueAccessor {
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
-  public setValue(value: string) {
-    this.value = value;
+  public setValue(option: option) {
+    this.value = option.text;
     this.isTouched = true;
-    this.onChange(value);
+    this.onChange(option.value);
     this.onTouched();
     this.toggleDropdown();
   }
