@@ -1,0 +1,54 @@
+<section class="main">
+  <div class="container">
+    <div class="main__content">
+      <div class="main__body">
+        <div class="main__left left-main">
+          <form class="left-main__form form-main" [formGroup]="form">
+            <input
+              class="input"
+              formControlName="place"
+              type="text"
+              placeholder="Укажите район/город и т.п." />
+            <input
+              class="input"
+              formControlName="amount"
+              type="text"
+              placeholder="Количество рекламных сторон" />
+            <app-select
+              formControlName="gender"
+              [options]="options"
+              [placeholder]="'Гендер целевой аудитории'" />
+            <div class="form-main__age">
+              <input
+                class="input"
+                formControlName="ageFrom"
+                type="number"
+                placeholder="Возраст (от)" />
+              <input
+                class="input"
+                formControlName="ageTo"
+                type="number"
+                placeholder="Возраст (до)" />
+            </div>
+            <input
+              class="input"
+              formControlName="income"
+              type="number"
+              placeholder="Доход целевой аудитории"
+              currency />
+            <app-button
+              (click)="mapService.findPlace(form.controls.place.value!)"
+              >Генерация точек</app-button
+            >
+            <small *ngIf="form.invalid"></small>
+          </form>
+        </div>
+        <div class="main__right right-main">
+          <div class="right-main__map">
+            <app-map />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

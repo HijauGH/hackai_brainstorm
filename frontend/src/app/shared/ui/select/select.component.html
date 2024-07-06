@@ -1,0 +1,21 @@
+<div class="select">
+  <div
+    class="select__value"
+    [class.placeholder]="!isTouched"
+    (click)="toggleDropdown()">
+    {{ isTouched ? value : placeholder }}
+  </div>
+  <div
+    #dropdown
+    class="select__dropdown dropdown-select"
+    [class._active]="isDropdownOpen">
+    <ul class="dropdown-select__list" #list>
+      <li
+        class="dropdown-select__item"
+        *ngFor="let option of options"
+        (click)="setValue(option.value)">
+        {{ option.value }}
+      </li>
+    </ul>
+  </div>
+</div>

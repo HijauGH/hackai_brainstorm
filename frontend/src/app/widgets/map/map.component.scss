@@ -1,0 +1,16 @@
+.map {
+  &__map {
+    margin-bottom: 34px;
+    border: 1px solid #696969;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  // .map__info
+
+  &__info {
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #696969;
+    border-radius: 20px;
+  }
+}

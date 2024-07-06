@@ -1,0 +1,45 @@
+.container {
+  max-width: 1422px;
+}
+.header {
+  background-color: #171515;
+  padding: 20px;
+  // .header__content
+
+  &__content {
+  }
+
+  // .header__body
+
+  &__body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  // .header__left
+
+  &__left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+  }
+
+  // .header__right
+
+  &__right {
+  }
+}
+.left-header {
+  // .left-header__logo
+
+  &__logo {
+  }
+}
+.right-header {
+  // .right-header__logo
+
+  &__logo {
+  }
+}

@@ -1,0 +1,65 @@
+@keyframes loading {
+  0%,
+  60% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    transform: translate(-50%, -150%) scale(1.5);
+  }
+}
+.btn {
+  position: relative;
+  button {
+    width: 100%;
+    background-color: #ebff00;
+    color: #000000;
+    padding: 15px;
+    border-radius: 6px;
+    border: 1px solid #696969;
+    transition:
+      background-color 0.3s ease 0s,
+      color 0.3s ease 0s;
+    &:hover {
+      background-color: #171515;
+      color: #fff;
+    }
+    &._active {
+      background-color: #171515;
+      color: transparent;
+    }
+  }
+  &__loading {
+    display: none;
+
+    &._active {
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+    }
+    span {
+      border-radius: 50%;
+      background-color: #fff;
+      width: 10px;
+      height: 10px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      animation: loading 1s ease-in-out infinite alternate;
+      animation-delay: 0.16s;
+      &:nth-child(1) {
+        left: calc(50% - 15px);
+      }
+      &:nth-child(3) {
+        left: calc(50% + 15px);
+        animation-delay: 0.32s;
+      }
+    }
+  }
+}
