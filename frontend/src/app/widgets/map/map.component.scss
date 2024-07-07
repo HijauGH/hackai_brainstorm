@@ -4,6 +4,17 @@
     border: 1px solid #696969;
     border-radius: 20px;
     overflow: hidden;
+    #map {
+      width: 756px;
+      height: 368px;
+      @media (max-width: 1300px) {
+        width: 90vw;
+        height: 400px;
+      }
+      @media (max-width: 500px) {
+        height: 300px;
+      }
+    }
   }
   // .map__info
 

@@ -49,22 +49,14 @@ export class HomeComponent {
   }
 
   public getPoints(value: ICreatePoint) {
-    this.mapService.generatePoints(
-      {
-        coord_value: [{ coord: [39.64, 55.76], value: 23 }],
-        text: '',
-        error: '',
-      },
-      'colored'
-    );
+
     this.dataIsLoading = true;
     this.pointsService
       .getPointsBy({ ...value })
       .pipe(
-        switchMap((points: IGetPoints) => {
-          this.mapService.text = points.text;
-          return this.mapService.generatePoints(points, 'colored');
-        }),
+        switchMap((points: IGetPoints) => 
+         this.mapService.generatePoints(points, 'colored')
+        ),
         catchError(error => {
           console.log(error.message);
           return of(null);
@@ -75,3 +67,4 @@ export class HomeComponent {
       });
   }
 }
+

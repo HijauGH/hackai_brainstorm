@@ -1,8 +1,5 @@
-<div class="select">
-  <div
-    class="select__value"
-    [class.placeholder]="!isTouched"
-    (click)="toggleDropdown()">
+<div class="select" (click)="toggleDropdown()">
+  <div class="select__value" [class.placeholder]="!isTouched">
     {{ isTouched ? value : placeholder }}
   </div>
   <div

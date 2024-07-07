@@ -24,6 +24,12 @@
   &__body {
     display: flex;
     justify-content: space-between;
+    @media (max-width: 1300px) {
+      flex-direction: column-reverse;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    }
   }
 
   // .main__left

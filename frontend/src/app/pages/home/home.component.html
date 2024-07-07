@@ -36,9 +36,12 @@
               (click)="form.valid ? getPoints(formatValue(form.value)) : ''"
               >Генерация точек</app-button
             >
+						<app-button
+              (click)="mapService.getStartPoints(); form.reset()"
+              >Сброс точек</app-button>
             <small *ngIf="form.invalid && form.touched" style="color: red"
-              >Все поля обязательны</small
-            >
+              >Все поля обязательны</small>
+						
           </form>
         </div>
         <div class="main__right right-main">
@@ -50,3 +53,4 @@
     </div>
   </div>
 </section>
+

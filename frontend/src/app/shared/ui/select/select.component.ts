@@ -49,7 +49,6 @@ export class SelectComponent implements ControlValueAccessor {
     this.isTouched = true;
     this.onChange(option.value);
     this.onTouched();
-    this.toggleDropdown();
   }
   public toggleDropdown() {
     const h = this.list.nativeElement.offsetHeight;
@@ -62,3 +61,4 @@ export class SelectComponent implements ControlValueAccessor {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 }
+

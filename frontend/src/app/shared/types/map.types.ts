@@ -1,4 +1,4 @@
-export type Point = [number, number];
+export type Point = [string,string];
 export interface ICreatePolygon {
   points: Point[];
   hintContent: string;
@@ -22,7 +22,7 @@ export interface option {
 export interface IGetPoints {
   coord_value: [
     {
-      coord: Point;
+      coord: Point[];
       value: number;
     },
   ];

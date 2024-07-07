@@ -28,18 +28,45 @@ export class MapService {
   private initMap() {
     this.createMap();
 
-    // this.pointsService.getAllPoints().subscribe(p =>
-    //   this.generatePoints(
-    //     {
-    //       coord_value: [{ coord: [55.76, 37.64], value: 23 }],
-    //       text: '',
-    //       error: '',
-    //     },
-    //     '#00000'
-    //   )
+    this.getStartPoints();
+
+    // this.yandexMap.events.add('click', (e: any) => this.clickFn(e));
+  }
+
+  public getStartPoints() {
+    // this.generatePoints(
+    //   {
+    //     coord_value: [
+    //       {
+    //         coord: [
+    //           ['55.573691', '37.631423'],
+    //           ['55.584765', '37.712454'],
+    //           ['55.808425457052', '37.388807961811'],
+    //           ['55.674378', '37.422364'],
+    //           ['55.608396', '37.766383'],
+    //           ['55.908622', '37.553523'],
+    //           ['55.71', '37.3875'],
+    //           ['55.626667', '37.472993'],
+    //           ['55.82762', '37.832285'],
+    //           ['55.864929', '37.402182'],
+    //           ['55.79614', '37.377824'],
+    //           ['55.878467', '37.734767'],
+    //           ['55.835535', '37.816508'],
+    //           ['55.756054677003', '37.61509001255'],
+    //         ],
+    //         value: 0,
+    //       },
+    //     ],
+    //     text: 'test test',
+    //     error: '',
+    //   },
+
+    //   'default'
     // );
 
-    this.yandexMap.events.add('click', (e: any) => this.clickFn(e));
+    this.pointsService
+      .getAllPoints()
+      .subscribe(p => this.generatePoints(p, 'default'));
   }
 
   private createMap() {
@@ -47,15 +74,6 @@ export class MapService {
       center: [37.64, 55.76],
       zoom: 10,
     });
-
-    this.generatePoints(
-      {
-        coord_value: [{ coord: [37.64, 55.76], value: 23 }],
-        text: '',
-        error: '',
-      },
-      'default'
-    );
   }
 
   private clickFn(e: any) {
@@ -101,13 +119,30 @@ export class MapService {
   }
 
   public generatePoints(points: IGetPoints, colorType: 'default' | 'colored') {
+    this.text = points.text;
     this.yandexMap.geoObjects.removeAll();
-    points.coord_value.forEach(el => {
+    const clusterer = new ymaps.Clusterer({
+      preset:
+        colorType === 'default'
+          ? 'islands#invertedBlackClusterIcons'
+          : 'islands#invertedRedClusterIcons',
+
+      groupByCoordinates: false,
+
+      clusterDisableClickZoom: true,
+      clusterHideIconOnBalloonOpen: false,
+      geoObjectHideIconOnBalloonOpen: false,
+    });
+    points.coord_value[0].coord.forEach(el => {
       const placemark = new ymaps.Placemark(
-        el.coord,
-        {},
+        [+el[1], +el[0]],
         {
-          draggable: true,
+          balloonContentHeader: '<font size=3><b>Сторона</b></font>',
+          balloonContentBody: '<p>Описание стороны</p>',
+
+          clusterCaption: 'сторона <strong>' + '</strong>',
+        },
+        {
           iconLayout: 'default#image',
           iconImageHref:
             colorType === 'default'
@@ -115,10 +150,11 @@ export class MapService {
               : 'assets/img/icons/marker-red.svg',
         }
       );
-      this.yandexMap.geoObjects.add(placemark);
+      clusterer.add(placemark);
+      // this.yandexMap.geoObjects.add(placemark);
     });
-
-    return of();
+    this.yandexMap.geoObjects.add(clusterer);
+    return of(null);
   }
 
   public generatePolygon(polygon: ICreatePolygon) {

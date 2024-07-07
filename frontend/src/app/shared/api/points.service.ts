@@ -6,6 +6,8 @@ import { ICreatePoint } from '../types/map.types';
 
 export const headers = new HttpHeaders({
   'Content-Type': 'application/json',
+  'X-Requested-With': 'XMLHttpRequest',
+  'Access-Control-Allow-Origin': '*',
 });
 @Injectable({ providedIn: 'root' })
 export class pointsService {
