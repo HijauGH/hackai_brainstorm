@@ -14,16 +14,8 @@ export class pointsService {
   constructor(private http: HttpClient) {}
 
   public getAllPoints() {
-    return this.http.post<any>(
+    return this.http.get<any>(
       environment.apiUrl,
-      {
-        adSides: 0,
-        gender: 'male',
-        ageFrom: 0,
-        ageTo: 0,
-        income: '0',
-        type: 0,
-      },
       { headers: headers }
     );
   }

@@ -1,4 +1,4 @@
-from .interface import AI_Interface
+from .interface import *
 
 class API:
     DEFAULT_REQUEST = {
@@ -9,9 +9,11 @@ class API:
     DATA_INVALID = {"error": "Данные некорректны"}
 
     def get_point_request(self, data):
+        print(data)
         req, keys_type = self.request(data)
-        req['coord_value'] = AI_Interface.get_coord(keys_type),
-        req['text'] = 'Описание точки'
+        coord, value = AI_Interface.get_coord(keys_type)
+        req['coord_value'] = [{'coord': coord, 'value': value}]
+        req['text'] = f'Было найдено {len(coord)} точек. Они принесут ~{value} охвата'
 
         return req
 
@@ -30,15 +32,15 @@ class API:
             "income": '',
             'type': 0
         }
-        
+
         # Проверка типов данных
         for key in keys_type.keys():
             try:
                 _ = type(keys_type[key])(data[key])
-                
+
             except ValueError:
                 return self.DATA_INVALID
-        
+
             else:
                 keys_type[key] = _
 

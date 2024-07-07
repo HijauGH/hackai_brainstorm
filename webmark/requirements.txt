@@ -14,3 +14,9 @@ win32-setctime==1.1.0
 python-dotenv==0.21.0
 django-extensions
 django-cors-headers
+catboost
+osmnx
+scipy
+geopy
+pandas
+numpy
